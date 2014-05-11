@@ -1,0 +1,58 @@
+.indexHead{height:240px; background:#dd0311; overflow:hidden; position:relative;}
+.indexHead a{position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
+
+.indexList{height:240px; overflow:hidden;}
+.indexList li{float:left; width:50%; height:120px; overflow:hidden;}
+.indexList a{text-align:center; display:block; height:120px; border-left:#fff solid 1px; border-top:#fff solid 1px; font-size:15px;}
+.indexList .imgDiv{height:60px; padding-top:20px;}
+.indexList img{width:50px;}
+
+.web li{height:120px; padding-left:130px; overflow:hidden; position:relative; border-bottom:#FFF solid 1px; font-size:14px;}
+.web .imgDiv{position:absolute; z-index:1; left:20px; top:20px;}
+.web .imgDiv img{width:80px;}
+.web .name{padding:25px 0 10px 0;}
+.web .name a{color:#e7101e;}
+.web dd{float:left; height:26px; width:50%; overflow:hidden;}
+
+.aboutPart1{height:150px; overflow:hidden; background:#e40000; color:#FFF; text-align:center; padding:0 10px; font-size:14px;}
+.aboutPart1 li{float:left; width:33.333%;}
+.aboutPart1 h1{width:80px; height:80px; overflow:hidden; margin:20px auto 10px auto; text-align:center; line-height:80px; background:#FFF; color:#e40000; font-size:26px;
+border-radius:80px;
+-moz-border-radius:80px;
+}
+.about .content{border-bottom:#FFF solid 1px; border-top:#FFF solid 1px; padding:15px; line-height:26px; font-size:14px; clear:both;}
+.about .imgDiv img{width:100%; float:left;}
+
+.banner img{width:100%;}
+.banner ul li{ float:left;}
+/**/
+#nav{position:absolute; width:100%; height:25px; padding-top:15px; overflow:hidden; bottom:0px; left:0px; background:url(../image/bg.png); text-align:center;}
+#nav span{display:inline-block; background:#fff; border-radius:10px; width:10px; height:10px; margin:0 5px;}
+#nav span.active{background:#dd0311;}
+#prev{display:block; float:left; background:url(../image/leftBtn.png) left top no-repeat; width:19px; height:19px; overflow:hidden; cursor:pointer; position:relative; left:10px; top:-5px;}
+#next{display:block; float:right; background:url(../image/rightBtn.png) right top no-repeat; width:19px; height:19px; overflow:hidden; cursor:pointer; position:relative; right:10px; top:-5px;}
+
+.caseName{position:fixed; z-index:1000; left:0px; top:23px; width:100%; height:35px; line-height:35px; text-align:center; overflow:hidden; background:#dd0311; color:#FFF; font-size:16px;}
+
+.product{padding:10px 10px 10px 10px;}
+.product li{background:#FFF; min-height:100px; _height:100px; margin-bottom:10px;
+box-shadow:0 0 3px #bbb;
+}
+.product img{width:100%; float:left;}
+.product h1{clear:both; padding:10px 90px 10px 10px; font-weight:100; font-size:1.5em; color:#000; position:relative;}
+.product h1 span{color:#999; position:absolute; top:13px; right:10px; font-size:0.8em;}
+.product h1 a{color:#000;}
+.product .content{padding:0 10px 10px 10px; font-size:1.2em; color:#999; position:relative; top:-3px;}
+.product .content2{color:#333;}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,13 @@
+$(function(){
+	//--左侧菜单
+	$('.headDiv').find('a').eq(0).click(function(){
+		$('.pageWal').addClass('pageWalNow');
+		$('.sideNav').addClass('sideNavNow');
+		})
+	$('.sideNav').find('.back').click(function(){
+		$('.pageWal').removeClass('pageWalNow');
+		$('.sideNav').removeClass('sideNavNow');
+		})
+	//--焦点图	
+	//
+	})
