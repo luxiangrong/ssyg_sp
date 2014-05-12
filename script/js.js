@@ -61,21 +61,23 @@ $(function() {
 	
 	$("body").touchwipe({
 		wipeMoving: function(dx, dy) {
-				$(".sideNav").addClass('no-transition');
-				$(".pageWal").addClass('no-transition');
+			if(Math.abs(dx) < 20)
+				return;
+			$(".sideNav").addClass('no-transition');
+			$(".pageWal").addClass('no-transition');
+		
+			var sideNavT3DX= initTranslate3dX.sideNav - dx*0.7;
+			var pageWalT3DX = initTranslate3dX.pageWal - dx*0.7;
 			
-				var sideNavT3DX= initTranslate3dX.sideNav - dx*0.7;
-				var pageWalT3DX = initTranslate3dX.pageWal - dx*0.7;
-				
-				if(sideNavT3DX >= 0 || pageWalT3DX <= 0) {
-					return;
-				}
-				
-				$(".sideNav").css('transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
-				$(".sideNav").css('-webkit-transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
-				
-				$(".pageWal").css('transform', 'translate3d('+ pageWalT3DX + 'px, 0px, 0px)');
-				$(".pageWal").css('-webkit-transform', 'translate3d(' +  pageWalT3DX + 'px, 0px, 0px)');
+			if(sideNavT3DX >= 0 || pageWalT3DX <= 0) {
+				return;
+			}
+			
+			$(".sideNav").css('transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
+			$(".sideNav").css('-webkit-transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
+			
+			$(".pageWal").css('transform', 'translate3d('+ pageWalT3DX + 'px, 0px, 0px)');
+			$(".pageWal").css('-webkit-transform', 'translate3d(' +  pageWalT3DX + 'px, 0px, 0px)');
 		},
 		wipeLeft: function(){
 			hideSideNav();
@@ -83,6 +85,7 @@ $(function() {
 		wipeRight: function(){
 			showSideNav();
 		},
+		min_move_x: 20
 	});
 	hideSideNav();
 	

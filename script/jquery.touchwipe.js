@@ -22,8 +22,8 @@
 			},
 			wipeMoving: function(){
 			},
-			preventDefaultEvents : true,
-			stopPropagation : true
+			preventDefaultEvents : 'horizontal',
+			stopPropagation : 'horizontal'
 		};
 
 		if (settings)
@@ -46,35 +46,46 @@
 			}
 
 			function onTouchMove(e) {
-				if (config.preventDefaultEvents) {
-					e.preventDefault();
-				}
-				if (config.stopPropagation) {
-					$.Event(e).stopPropagation();
-				}
 				if (isMoving) {
 					var x = e.touches[0].pageX;
 					var y = e.touches[0].pageY;
-					 dx = startX - x;
-					 dy = startY - y;
-					config.wipeMoving(dx, dy);
+					dx = startX - x;
+					dy = startY - y;
+					
+					
+					if(config.preventDefaultEvents == 'horizontal') {
+						if(Math.abs(dx) > Math.abs(dy)) {
+							config.wipeMoving(dx, dy);
+							e.preventDefault();
+						} 
+					} else {
+						if(Math.abs(dx) < Math.abs(dy)) {
+							config.wipeMoving(dx, dy);
+							e.preventDefault();
+						} 
+					}
+					
 				}
 			}
 
 			function onTouchEnd(e) {
 				if (isMoving) {
 					if (Math.abs(dx) >= config.min_move_x) {
-						if (dx > 0) {
-							config.wipeLeft();
-						} else {
-							config.wipeRight();
+						if(Math.abs(dx) > Math.abs(dy)) {
+							if (dx > 0) {
+								config.wipeLeft();
+							} else {
+								config.wipeRight();
+							}
 						}
 						cancelTouch();
 					} else if (Math.abs(dy) >= config.min_move_y) {
-						if (dy > 0) {
-							config.wipeDown();
-						} else {
-							config.wipeUp();
+						if(Math.abs(dx) > Math.abs(dy)) {
+							if (dy > 0) {
+								config.wipeDown();
+							} else {
+								config.wipeUp();
+							}
 						}
 						cancelTouch();
 					}
