@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+		<title>微官网</title>
+		<link href="style/main.css" rel="stylesheet" type="text/css" />
+		<link href="style/index.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="swiper/css/idangerous.swiper.css">
+		<script language="javascript" type="text/javascript" src="script/jquery-1.7.1.min.js"></script>
+		<script language="javascript" type="text/javascript" src="script/jquery.touchwipe.js"></script>
+		<script language="javascript" type="text/javascript" src="script/js.js"></script>
+		<script language="javascript" type="text/javascript" src="script/fun.js"></script>
+		
+		<style type="text/css">
+				.paginationDiv {
+					position: relative;
+					overflow: hidden;
+					width: 100%;
+					height: 100%;
+				}
+				.paginationDiv img {
+					width: 100%;
+					height: auto;
+				}
+				.pagination1 {
+					position: absolute;
+					top: 0px;
+					left: 5px;
+					width: 100%;
+					height: 33px;
+					z-index: 1000;
+				}
+				.pagination1 .swiper-pagination-switch {
+					display: inline-block;
+					width: 12px;
+					height: 12px;
+					border-radius: 10px;
+					background: #DDD;
+					margin: 0 4px;
+					cursor: pointer;
+					position: relative;
+					top: 10px;
+				}
+				.pagination1 .swiper-active-switch {
+					background: #767676;
+				}
+				
+			</style>
+	</head>
+
+	<body>
+		<div class="headDiv">
+			<a href="javascript:;" class="btn"></a>
+			<div class="imgDiv">
+				<a href="index.html"><img src="image/logo.gif" height="34"></a>
+			</div>
+		</div>
+		<div class="sideNav">
+			<ul>
+				<li>
+					<a href="javascript:;" class="back">Back</a>
+				</li>
+				<li>
+					<a href="web.html">网站建设</a>
+				</li>
+				<li>
+					<a href="Mobile.html">移动终端</a>
+				</li>
+				<li>
+					<a href="case.html">网站运维</a>
+				</li>
+				<li>
+					<a href="product.html">案例</a>
+				</li>
+				<li>
+					<a href="about.html">关于&联系 </a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="pageWal">
+			<!--pageWal-->
+			<div class="paginationDiv">
+				<div class="swiper-container swiper1">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide"><img src="image/img640_1.jpg" >
+						</div>
+						<div class="swiper-slide"><img src="image/img640_2.jpg" >
+						</div>
+					</div>
+				</div>
+				<div class="pagination1" id="caseDetailPagination"></div>
+			</div>
+			<script src="swiper/js/idangerous.swiper.min.js"></script>
+			<script>
+			$(document).ready(function(){
+				var mySwiper = new Swiper('.swiper-container',{
+					pagination: '.pagination1',
+					paginationClickable: true,
+					calculateHeight: true,
+					loop:true,
+					grabCursor: true,
+					longSwipesRatio: 0.6
+				}) ;
+			});
+			</script>
+			<!--pageWalEnd-->
+		</div>
+	</body>
+</html>
