@@ -47,8 +47,8 @@
 
 			function onTouchMove(e) {
 				if (isMoving) {
-					var x = e.touches[0].pageX;
-					var y = e.touches[0].pageY;
+					var x = e.touches[0].clientX;
+					var y = e.touches[0].clientY;
 					dx = startX - x;
 					dy = startY - y;
 					
@@ -103,8 +103,8 @@
 					}
 				}
 				if (e.touches.length == 1) {
-					startX = e.touches[0].pageX;
-					startY = e.touches[0].pageY;
+					startX = e.touches[0].clientX;
+					startY = e.touches[0].clientY;
 					isMoving = true;
 					this.addEventListener('touchmove', onTouchMove, false);
 					this.addEventListener('touchend', onTouchEnd, true);

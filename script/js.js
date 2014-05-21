@@ -61,8 +61,6 @@ $(function() {
 	
 	$("body").touchwipe({
 		wipeMoving: function(dx, dy) {
-			if(Math.abs(dx) < 20)
-				return;
 			$(".sideNav").addClass('no-transition');
 			$(".pageWal").addClass('no-transition');
 		
@@ -85,7 +83,7 @@ $(function() {
 		wipeRight: function(){
 			showSideNav();
 		},
-		min_move_x: 20
+		min_move_x: 1
 	});
 	hideSideNav();
 	
