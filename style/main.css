@@ -19,7 +19,7 @@ h5{font-size:12px;}
 
 .wal{width:980px; margin:0px auto; overflow:hidden;}
 
-a, .sideNav, .pageWal{
+a, .sideNav, .pageWal, .fixhelp{
     -webkit-transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
     -ms-transition: 0.3s ease-out;

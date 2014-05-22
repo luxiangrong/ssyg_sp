@@ -10,29 +10,48 @@ $(function() {
 	var winWidth = $(window).width();
 	function showSideNav() {
 		$(".sideNav").removeClass('no-transition');
-		$(".pageWal").removeClass('no-transition');
+		$(".pageWal, .fixhelp").removeClass('no-transition');
 		
 		$(".sideNav").css('box-shadow',  '3px 3px 5px #666666');
 		
 		$(".sideNav").css('transform', 'translate3d(0px, 0px, 0px)');
 		$(".sideNav").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
 		
-		$(".pageWal").css('transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
-		$(".pageWal").css('-webkit-transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
+		$(".pageWal, .fixhelp").css('transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
+		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
 	}
 	
 	function hideSideNav() {
 		
 		$(".sideNav").removeClass('no-transition');
-		$(".pageWal").removeClass('no-transition');
+		$(".pageWal, .fixhelp").removeClass('no-transition');
 		
 		$(".sideNav").css('box-shadow',  'none');
 		
 		$(".sideNav").css('transform', 'translate3d(-' + $(".sideNav").width() + 'px, 0px, 0px)');
 		$(".sideNav").css('-webkit-transform', 'translate3d(-' + $(".sideNav").width() + 'px, 0px, 0px)');
 		
-		$(".pageWal").css('transform', 'translate3d(0px, 0px, 0px)');
-		$(".pageWal").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
+		$(".pageWal, .fixhelp").css('transform', 'translate3d(0px, 0px, 0px)');
+		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
+	}
+	
+	function wipeMoving(dx, dy){
+		$(".sideNav").addClass('no-transition');
+		$(".pageWal, .pagination1").addClass('no-transition');
+	
+		var sideNavT3DX= initTranslate3dX.sideNav - dx*0.7;
+		var pageWalT3DX = initTranslate3dX.pageWal - dx*0.7;
+		
+		
+		if(sideNavT3DX >= 0 || pageWalT3DX <= 0) {
+			return;
+		}
+		
+		$(".sideNav").css('transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
+		$(".sideNav").css('-webkit-transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
+		
+		$(".pageWal, .fixhelp").css('transform', 'translate3d('+ pageWalT3DX + 'px, 0px, 0px)');
+		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(' +  pageWalT3DX + 'px, 0px, 0px)');
 	}
 	
 	var parseToMatrix = function(str) {
@@ -49,7 +68,7 @@ $(function() {
 		'sideNav' : 0,
 		'pageWal' : 0
 	};
-	$("body").on('touchstart', function(){
+	$("body, .sideNav").on('touchstart', function(){
 		initTranslate3dX ={
 			'sideNav' : parseToMatrix($(".sideNav").css('-webkit-transform'))[4],
 			'pageWal' : parseToMatrix($(".pageWal").css('-webkit-transform'))[4]
@@ -61,21 +80,7 @@ $(function() {
 	
 	$("body").touchwipe({
 		wipeMoving: function(dx, dy) {
-			$(".sideNav").addClass('no-transition');
-			$(".pageWal").addClass('no-transition');
-		
-			var sideNavT3DX= initTranslate3dX.sideNav - dx*0.7;
-			var pageWalT3DX = initTranslate3dX.pageWal - dx*0.7;
-			
-			if(sideNavT3DX >= 0 || pageWalT3DX <= 0) {
-				return;
-			}
-			
-			$(".sideNav").css('transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
-			$(".sideNav").css('-webkit-transform', 'translate3d(' + sideNavT3DX + 'px, 0px, 0px)');
-			
-			$(".pageWal").css('transform', 'translate3d('+ pageWalT3DX + 'px, 0px, 0px)');
-			$(".pageWal").css('-webkit-transform', 'translate3d(' +  pageWalT3DX + 'px, 0px, 0px)');
+			wipeMoving(dx, dy);
 		},
 		wipeLeft: function(){
 			hideSideNav();
@@ -83,8 +88,30 @@ $(function() {
 		wipeRight: function(){
 			showSideNav();
 		},
-		min_move_x: 1
+		wipeStart: function(){
+			initTranslate3dX ={
+				'sideNav' : parseToMatrix($(".sideNav").css('-webkit-transform'))[4],
+				'pageWal' : parseToMatrix($(".pageWal").css('-webkit-transform'))[4]
+			};
+		},
+		min_move_x: 2,
+		activeRect:[0,0,0.3,1]
 	});
+	
+	$(".sideNav").touchwipe({
+		wipeMoving: function(dx, dy) {
+			wipeMoving(dx, dy);
+		},
+		wipeLeft: function(){
+			hideSideNav();
+		},
+		wipeRight: function(){
+			showSideNav();
+		},
+		min_move_x: 2,
+		activeRect:[0,0,1,1]
+	});
+	
 	hideSideNav();
 	
 	//--焦点图

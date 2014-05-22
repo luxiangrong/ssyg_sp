@@ -22,8 +22,11 @@
 			},
 			wipeMoving: function(){
 			},
+			wipeStart: function(){
+			},
 			preventDefaultEvents : 'horizontal',
-			stopPropagation : 'horizontal'
+			stopPropagation : 'horizontal',
+			activeRect:[0,0,1,1]
 		};
 
 		if (settings)
@@ -51,8 +54,6 @@
 					var y = e.touches[0].clientY;
 					dx = startX - x;
 					dy = startY - y;
-					
-					
 					if(config.preventDefaultEvents == 'horizontal') {
 						if(Math.abs(dx) > Math.abs(dy)) {
 							config.wipeMoving(dx, dy);
@@ -93,26 +94,40 @@
 			}
 
 			function onTouchStart(e) {
-				if (config.stopPropagation) {
-					$.Event(e).stopPropagation();
-				}
-				if(e.target) {
-					var $target = $(e.target);
-					if($target.attr('data-stopPropagation')) {
-						return;
-					}
-				}
+				
 				if (e.touches.length == 1) {
 					startX = e.touches[0].clientX;
 					startY = e.touches[0].clientY;
-					isMoving = true;
-					this.addEventListener('touchmove', onTouchMove, false);
-					this.addEventListener('touchend', onTouchEnd, true);
+					config.wipeStart(startX, startY);
+					if(isInActiveRect(startX, startY)) {
+						if (config.stopPropagation) {
+							$.Event(e).stopPropagation();
+						}
+						if(e.target) {
+							var $target = $(e.target);
+							if($target.attr('data-stopPropagation')) {
+							}
+						}
+						
+						isMoving = true;
+						this.addEventListener('touchmove', onTouchMove, true);
+						this.addEventListener('touchend', onTouchEnd, true);
+					}
 				}
+			}
+			
+			function isInActiveRect(x, y) {
+				var _x = x / $(this).width();
+				var _y = y / $(this).height();
+				if(_x < config.activeRect[0]) return false;
+				if(_x > config.activeRect[2]) return false;
+				if(_y < config.activeRect[1]) return false;
+				if(_y > config.activeRect[3]) return false;
+				return true;
 			}
 
 			if ('ontouchstart' in document.documentElement) {
-				this.addEventListener('touchstart', onTouchStart, false);
+				this.addEventListener('touchstart', onTouchStart, true);
 			}
 		});
 
