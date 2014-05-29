@@ -5,7 +5,8 @@ $(function(){
 	var swiper = new Swiper('.swiper1', {
 		pagination : '.pagination1',
 		loop:true,
-		grabCursor: true
+		grabCursor: true,
+		calculateHeight: true,
 	});
 	//Navigation arrows
 	$('.arrow-left').click(function(e) {

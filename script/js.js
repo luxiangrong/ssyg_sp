@@ -112,7 +112,9 @@ $(function() {
 		activeRect:[0,0,1,1]
 	});
 	
-	hideSideNav();
+	$(document).ready(function(){
+		hideSideNav();
+	});
 	
 	//--焦点图
 	//
