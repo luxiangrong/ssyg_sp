@@ -19,6 +19,7 @@ $(function() {
 		
 		$(".pageWal, .fixhelp").css('transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
 		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
+	
 	}
 	
 	function hideSideNav() {
@@ -42,7 +43,7 @@ $(function() {
 		var sideNavT3DX= initTranslate3dX.sideNav - dx*0.7;
 		var pageWalT3DX = initTranslate3dX.pageWal - dx*0.7;
 		
-		
+		console.log(sideNavT3DX + "    -      " + pageWalT3DX);
 		if(sideNavT3DX >= 0 || pageWalT3DX <= 0) {
 			return;
 		}
@@ -68,12 +69,12 @@ $(function() {
 		'sideNav' : 0,
 		'pageWal' : 0
 	};
-	$("body, .sideNav").on('touchstart', function(){
+	$("body, .sideNav").on('touchstart mousedown', function(){
 		initTranslate3dX ={
 			'sideNav' : parseToMatrix($(".sideNav").css('-webkit-transform'))[4],
 			'pageWal' : parseToMatrix($(".pageWal").css('-webkit-transform'))[4]
 		};
-	}).on('touchend', function(){
+	}).on('touchend mouseup', function(){
 		$(".sideNav").removeClass('no-transition');
 		$(".pageWal").removeClass('no-transition');
 	});

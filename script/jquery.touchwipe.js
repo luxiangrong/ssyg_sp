@@ -26,13 +26,15 @@
 			},
 			preventDefaultEvents : 'horizontal',
 			stopPropagation : 'horizontal',
-			activeRect:[0,0,1,1]
+			activeRect:[0,0,1,1],
+			simulate: true
 		};
 
 		if (settings)
 			$.extend(config, settings);
 
 		this.each(function() {
+			var $this = $(this);
 			var startX;
 			var startY;
 			var dx;
@@ -41,6 +43,13 @@
 
 			function cancelTouch() {
 				this.removeEventListener('touchmove', onTouchMove);
+				if('ontouchmove' in document.documentElement) {
+					this.removeEventListener('touchmove', onTouchMove);
+				} else {
+					if(config.simulate) {
+						$this.off('mousemove', onTouchMove);
+					}
+				}
 				startX = null;
 				startY = null;
 				dx = null;
@@ -50,8 +59,14 @@
 
 			function onTouchMove(e) {
 				if (isMoving) {
-					var x = e.touches[0].clientX;
-					var y = e.touches[0].clientY;
+					if(e.touches && e.touches.length == 1) {
+						var x = e.touches[0].clientX;
+						var y = e.touches[0].clientY;
+					} else if (config.simulate) {
+						var x = e.originalEvent.screenX;
+						var y = e.originalEvent.screenY;
+					}
+					
 					dx = startX - x;
 					dy = startY - y;
 					if(config.preventDefaultEvents == 'horizontal') {
@@ -94,24 +109,39 @@
 			}
 
 			function onTouchStart(e) {
-				
-				if (e.touches.length == 1) {
+				if(e.touches && e.touches.length == 1) {
 					startX = e.touches[0].clientX;
 					startY = e.touches[0].clientY;
-					config.wipeStart(startX, startY);
-					if(isInActiveRect(startX, startY)) {
-						if (config.stopPropagation) {
-							$.Event(e).stopPropagation();
+				} else if (config.simulate) {
+					startX = e.originalEvent.screenX;
+					startY = e.originalEvent.screenY;
+				}
+				
+				config.wipeStart(startX, startY);
+				if(isInActiveRect(startX, startY)) {
+					if (config.stopPropagation) {
+						$.Event(e).stopPropagation();
+					}
+					if(e.target) {
+						var $target = $(e.target);
+						if($target.attr('data-stopPropagation')) {
 						}
-						if(e.target) {
-							var $target = $(e.target);
-							if($target.attr('data-stopPropagation')) {
-							}
-						}
-						
-						isMoving = true;
+					}
+					
+					isMoving = true;
+					if('ontouchmove' in document.documentElement) {
 						this.addEventListener('touchmove', onTouchMove, true);
+					} else {
+						if(config.simulate) {
+							$this.on('mousemove', onTouchMove);
+						}
+					}
+					if('ontouchend' in document.documentElement) {
 						this.addEventListener('touchend', onTouchEnd, true);
+					} else {
+						if(config.simulate) {
+							$this.on('mouseup', onTouchEnd);
+						}
 					}
 				}
 			}
@@ -128,6 +158,10 @@
 
 			if ('ontouchstart' in document.documentElement) {
 				this.addEventListener('touchstart', onTouchStart, true);
+			} else {
+				if(config.simulate) {
+					$this.on('mousedown', onTouchStart);
+				}
 			}
 		});
 
