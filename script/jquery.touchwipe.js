@@ -8,6 +8,7 @@
  * @version 1.0 (15th July 2010)
  */
 (function($) {
+	jQuery.event.props.push( "touches" );
 	$.fn.touchwipe = function(settings) {
 		var config = {
 			min_move_x : 20,
@@ -29,6 +30,11 @@
 			activeRect:[0,0,1,1],
 			simulate: true
 		};
+
+		if(settings === 'cancel') {
+			this.each(function() {
+			});
+		}
 
 		if (settings)
 			$.extend(config, settings);
@@ -109,6 +115,7 @@
 			}
 
 			function onTouchStart(e) {
+				
 				if(e.touches && e.touches.length == 1) {
 					startX = e.touches[0].clientX;
 					startY = e.touches[0].clientY;
@@ -116,6 +123,8 @@
 					startX = e.originalEvent.screenX;
 					startY = e.originalEvent.screenY;
 				}
+				
+				
 				
 				config.wipeStart(startX, startY);
 				if(isInActiveRect(startX, startY)) {
@@ -130,17 +139,21 @@
 					
 					isMoving = true;
 					if('ontouchmove' in document.documentElement) {
-						this.addEventListener('touchmove', onTouchMove, true);
+						// this.removeEventListener('touchmove', onTouchMove);
+						// this.addEventListener('touchmove', onTouchMove, true);
+						$this.off('touchmove').on('touchmove', onTouchMove);
 					} else {
 						if(config.simulate) {
-							$this.on('mousemove', onTouchMove);
+							$this.off('mousemove').on('mousemove', onTouchMove);
 						}
 					}
 					if('ontouchend' in document.documentElement) {
-						this.addEventListener('touchend', onTouchEnd, true);
+						// this.removeEventListener('touchend', onTouchEnd);
+						// this.addEventListener('touchend', onTouchEnd, true);
+						$this.off('touchend').on('touchend', onTouchEnd);
 					} else {
 						if(config.simulate) {
-							$this.on('mouseup', onTouchEnd);
+							$this.off('mouseup').on('mouseup', onTouchEnd);
 						}
 					}
 				}
@@ -149,6 +162,7 @@
 			function isInActiveRect(x, y) {
 				var _x = x / $(this).width();
 				var _y = y / $(this).height();
+				
 				if(_x < config.activeRect[0]) return false;
 				if(_x > config.activeRect[2]) return false;
 				if(_y < config.activeRect[1]) return false;
@@ -157,10 +171,10 @@
 			}
 
 			if ('ontouchstart' in document.documentElement) {
-				this.addEventListener('touchstart', onTouchStart, true);
+				$this.off('touchstart').on('touchstart', onTouchStart);
 			} else {
 				if(config.simulate) {
-					$this.on('mousedown', onTouchStart);
+					$this.off('mousedown').on('mousedown', onTouchStart);
 				}
 			}
 		});
