@@ -20,7 +20,8 @@ $(function() {
 		$(".pageWal, .fixhelp").css('transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
 		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
 	
-		var fullScreenHolder = $("<div id='fullScreenHolder'></div>");
+		$(".fullScreenHolder").remove();
+		var fullScreenHolder = $("<div class='fullScreenHolder'></div>");
 		fullScreenHolder.css({
 			'position': 'fixed',
 			'left': '0',
@@ -29,8 +30,7 @@ $(function() {
 			'height': '100%',
 			'z-index': 50
 		});
-		$(".sideNav").before(fullScreenHolder);
-		
+		$("body").prepend(fullScreenHolder);
 		settings.activeRect = [0,0,1,1];
 		fullScreenHolder.touchwipe(settings);
 	
@@ -51,7 +51,7 @@ $(function() {
 		$(".pageWal, .fixhelp").css('transform', 'translate3d(0px, 0px, 0px)');
 		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
 		
-		$("#fullScreenHolder").remove();
+		$(".fullScreenHolder").remove();
 		
 		// settings.activeRect = [0,0,0.3,1];
 		// $("body").touchwipe(settings);

@@ -25,6 +25,7 @@
 			},
 			wipeStart: function(){
 			},
+			wipeEnd: function(){},
 			preventDefaultEvents : 'horizontal',
 			stopPropagation : 'horizontal',
 			activeRect:[0,0,1,1],
@@ -93,6 +94,7 @@
 			}
 
 			onTouchEnd = function(e) {
+				config.wipeEnd();
 				if (isMoving) {
 					if (Math.abs(dx) >= config.min_move_x) {
 						if(Math.abs(dx) > Math.abs(dy)) {

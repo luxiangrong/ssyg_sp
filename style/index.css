@@ -1,3 +1,4 @@
+body,html {overflow-x: hidden;}
 .indexHead{height:240px; background:#dd0311; overflow:hidden; position:relative;}
 .indexHead a{position:absolute; left:50%; top:50%; margin-left:-60px; margin-top:-60px;}
 
