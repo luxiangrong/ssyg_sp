@@ -30,6 +30,8 @@
 			activeRect:[0,0,1,1],
 			simulate: true
 		};
+		
+		var onTouchMove,onTouchEnd,onTouchStart;
 
 		if(settings === 'cancel') {
 			this.each(function() {
@@ -63,7 +65,7 @@
 				isMoving = false;
 			}
 
-			function onTouchMove(e) {
+			onTouchMove = function(e) {
 				if (isMoving) {
 					if(e.touches && e.touches.length == 1) {
 						var x = e.touches[0].clientX;
@@ -90,7 +92,7 @@
 				}
 			}
 
-			function onTouchEnd(e) {
+			onTouchEnd = function(e) {
 				if (isMoving) {
 					if (Math.abs(dx) >= config.min_move_x) {
 						if(Math.abs(dx) > Math.abs(dy)) {
@@ -114,7 +116,7 @@
 				}
 			}
 
-			function onTouchStart(e) {
+			onTouchStart = function(e) {
 				
 				if(e.touches && e.touches.length == 1) {
 					startX = e.touches[0].clientX;
@@ -123,8 +125,6 @@
 					startX = e.originalEvent.screenX;
 					startY = e.originalEvent.screenY;
 				}
-				
-				
 				
 				config.wipeStart(startX, startY);
 				if(isInActiveRect(startX, startY)) {
@@ -139,7 +139,7 @@
 					
 					isMoving = true;
 					if('ontouchmove' in document.documentElement) {
-						// this.removeEventListener('touchmove', onTouchMove);
+						// this.removeEventListener('touchmove', onTouchMove, true);
 						// this.addEventListener('touchmove', onTouchMove, true);
 						$this.off('touchmove').on('touchmove', onTouchMove);
 					} else {
@@ -148,9 +148,9 @@
 						}
 					}
 					if('ontouchend' in document.documentElement) {
-						// this.removeEventListener('touchend', onTouchEnd);
+						// this.removeEventListener('touchend', onTouchEnd, true);
 						// this.addEventListener('touchend', onTouchEnd, true);
-						$this.off('touchend').on('touchend', onTouchEnd);
+						$this.off('touchend').on('touchend', onTouchEnd);''
 					} else {
 						if(config.simulate) {
 							$this.off('mouseup').on('mouseup', onTouchEnd);
@@ -171,7 +171,10 @@
 			}
 
 			if ('ontouchstart' in document.documentElement) {
-				$this.off('touchstart').on('touchstart', onTouchStart);
+				$this.off('touchstart')
+				// this.removeEventListener('touchestart', onTouchStart, true);
+				this.addEventListener('touchstart', onTouchStart, true);
+				// $this.off('touchstart').on('touchstart', onTouchStart);
 			} else {
 				if(config.simulate) {
 					$this.off('mousedown').on('mousedown', onTouchStart);

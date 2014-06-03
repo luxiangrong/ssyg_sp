@@ -20,8 +20,22 @@ $(function() {
 		$(".pageWal, .fixhelp").css('transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
 		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(' + $(".sideNav").width()  + 'px, 0px, 0px)');
 	
+		var fullScreenHolder = $("<div id='fullScreenHolder'></div>");
+		fullScreenHolder.css({
+			'position': 'fixed',
+			'left': '0',
+			'top': '0',
+			'width': '100%',
+			'height': '100%',
+			'z-index': 50
+		});
+		$(".sideNav").before(fullScreenHolder);
+		
 		settings.activeRect = [0,0,1,1];
-		$("body").touchwipe(settings);
+		fullScreenHolder.touchwipe(settings);
+	
+		// settings.activeRect = [0,0,1,1];
+		// $("body").touchwipe(settings);
 	}
 	
 	function hideSideNav() {
@@ -37,16 +51,18 @@ $(function() {
 		$(".pageWal, .fixhelp").css('transform', 'translate3d(0px, 0px, 0px)');
 		$(".pageWal, .fixhelp").css('-webkit-transform', 'translate3d(0px, 0px, 0px)');
 		
-		settings.activeRect = [0,0,0.3,1];
-		$("body").touchwipe(settings);
+		$("#fullScreenHolder").remove();
+		
+		// settings.activeRect = [0,0,0.3,1];
+		// $("body").touchwipe(settings);
 	}
 	
 	function wipeMoving(dx, dy){
 		$(".sideNav").addClass('no-transition');
 		$(".pageWal, .pagination1").addClass('no-transition');
 	
-		var sideNavT3DX= initTranslate3dX.sideNav - dx*0.7;
-		var pageWalT3DX = initTranslate3dX.pageWal - dx*0.7;
+		var sideNavT3DX= initTranslate3dX.sideNav - dx;
+		var pageWalT3DX = initTranslate3dX.pageWal - dx;
 		
 		//console.log(sideNavT3DX + "    -      " + pageWalT3DX);
 		if(sideNavT3DX >= 0 || pageWalT3DX <= 0) {
@@ -123,6 +139,10 @@ $(function() {
 	};
 	
 	$("body").touchwipe(settings);
+	
+	settings.activeRect = [0,0,1,1];
+	
+	$(".sideNav").touchwipe(settings);
 	
 	$(document).ready(function(){
 		hideSideNav();
